@@ -1,0 +1,13 @@
+
+for q in {BRICKS,CHECKERBOARD,CIRCLES,CROSSHATCH,CROSSHATCH30,CROSSHATCH45,FISHSCALES,GRAY0,GRAY5,GRAY10,GRAY15,GRAY20,GRAY25,GRAY30,GRAY35,GRAY40,GRAY45,GRAY50,GRAY55,GRAY60,GRAY65,GRAY70,GRAY75,GRAY80,GRAY85,GRAY90,GRAY95,GRAY100,HEXAGONS,HORIZONTAL,HORIZONTAL2,HORIZONTAL3,HORIZONTALSAW,HS_BDIAGONAL,HS_CROSS,HS_DIAGCROSS,HS_FDIAGONAL,HS_HORIZONTAL,HS_VERTICAL,LEFT30,LEFT45,LEFTSHINGLE,OCTAGONS,RIGHT30,RIGHT45,RIGHTSHINGLE,SMALLFISHSCALES,VERTICAL,VERTICAL2,VERTICAL3,VERTICALBRICKS,VERTICALLEFTSHINGLE,VERTICALRIGHTSHINGLE,VERTICALSAW}; do
+echo "...creating pattern $q"
+convert -size 32x32 pattern:"$q" -auto-level -colors 3 im_pattern_$q.png
+
+done
+montage -geometry 32x32+0+0 -tile 6x im_pattern_*.png im_patterns.png
+
+for q in {1..256}; do
+echo "...creating color pattern $q"
+convert -colorspace rgb `find -iname "im_pattern_*png" | sort -R | head -n3` -combine im_color_pattern_$q.png;done
+
+montage -geometry 32x32+0+0 -tile 16x im_color_pattern_{1..256}.png im_color_patterns.png
